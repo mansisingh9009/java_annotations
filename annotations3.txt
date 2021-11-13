@@ -1,0 +1,63 @@
+package annotations;
+import java.lang.annotation.*;
+
+@Inherited
+@Documented
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+
+public @interface Execute {
+	int sequence() default 0;
+
+}
+
+package annotations;
+
+public class MyClass {
+	@Execute(sequence =2)
+	public void myMethod1() {
+		System.out.println("From method1");
+	}
+	@Execute(sequence =1)
+	public void myMethod2() {
+		System.out.println("from method2");
+	}
+	@Execute(sequence =3)
+	public void myMethod3() {
+		System.out.println("From method3");
+	}
+
+
+
+}
+
+package annotations;
+import java.lang.annotation.*;
+import java.lang.reflect.*;
+
+public class Question3 {
+
+	public static void main(String[] args) throws Exception {
+		MyClass myclass = new MyClass();
+		myclass.myMethod1();
+		myclass.myMethod3();
+		myclass.myMethod2();
+		Class c = myclass.getClass();
+		Method m = c.getDeclaredMethod("myMethod1");
+		Method m1 = c.getDeclaredMethod("myMethod2");
+		Method m2 = c.getDeclaredMethod("myMethod3");
+		Annotation ann = m.getAnnotation(Execute.class);
+		Annotation ann1 = m1.getAnnotation(Execute.class);
+		Annotation ann2= m2.getAnnotation(Execute.class);
+		Execute e1 = (Execute)ann1;
+		Execute e2 = (Execute)ann2;
+		Execute e3 = (Execute)ann3;
+		System.out.println(e1.sequence());
+		System.out.println(e2.sequence());
+		System.out.println(e3.sequence());
+		
+		
+
+	}
+
+}

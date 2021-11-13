@@ -1,0 +1,21 @@
+.package annotations;
+
+import java.lang.annotation.*;
+@Inherited
+@Documented
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+@interface Test{
+		String testCase();
+}
+
+package annotations;
+
+public class Prob1 {
+	@Test(testCase="")
+	public static void main(String[] args) {
+		System.out.println("Hello!");
+
+	}
+
+}
